@@ -1,13 +1,13 @@
 /* IAN AND ASBEL’S MEDICAL DB DDL */
 
 create table hospital (
-hospital_id       varchar(12) not null,
-hospital_name varchar(12),
+hospital_id       int		 not null,
+hospital_name varchar(12)	 not null,
 primary key (hospital_id)
 );
 
 create table physician (
-hospital_id_FK       varchar(12) not null,
+hospital_id_FK       int		 not null,
 physician_id      int           not null,
 physician_last_name  varchar(20)      not null,
 primary key (physician_id),
@@ -20,29 +20,31 @@ procedure_name       varchar(12)   not null,
 primary key (procedure_id)
 );
 
+create table patient (
+    case_id_FK      int      not null,
+	patient_id 		int      not null,
+     age            int		 not null,
+     diagnosis      varchar(30) not null,
+     primary key (patient_id)
+);
+
 create table medical_case (
 procedure_id_FK int           not null,
+patient_id_FK int				not null,
 case_id      int      not null,
 outcome    varchar(12)      not null,
 stay_duration     int              not null,
 primary key (case_id),
-foreign key (procedure_id_FK) references medical_procedure(procedure_id)
-);
-
-create table patient (
-    case_id_FK      int      not null,
-patient_id int             not null,
-     age            int,
-     diagnosis            varchar(10),
-     primary key (patient_id),
-     foreign key (case_id_FK) references medical_case(case_id)
+foreign key (procedure_id_FK) references medical_procedure(procedure_id),
+foreign key (patient_id_FK) references patient(patient_id)
 );
 
 create table works_on (
-w_physician_id      int            not null,
-w_case_id              int               not null,
-hours              decimal(3,1)      not null,
-primary key (w_physician_id, w_case_id),
-foreign key (w_physician_id) references physician(physician_id),
-foreign key (w_case_id) references medical_case(case_id)
+physician_id_FK      int            not null,
+case_id_FK           int            not null,
+hours              decimal(3,1)     not null,
+foreign key (physician_id_FK) references physician(physician_id),
+foreign key (case_id_FK) references medical_case(case_id)
 ); 
+
+alter table patient add foreign key (case_id_FK) references medical_case(case_id);
