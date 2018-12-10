@@ -142,3 +142,136 @@ def delete_post(post_id):
     db.session.commit()
     flash('Your post has been deleted!', 'success')
     return redirect(url_for('home'))
+
+
+@app.route("/patient/new", methods=['GET', 'POST'])
+@login_required
+def new_patient():
+    form = PatientForm()
+    if form.validate_on_submit():
+        patient = Patient(patient_id=form.patient_id.data, age=form.age.data,diagnosis=form.diagnosis.data)
+        db.session.add(patient_id)
+        db.session.commit()
+        flash('You have added a new Patient!', 'success')
+        return redirect(url_for('home'))
+    return render_template('create_patient.html', title='New Patient',
+                           form=form, legend='New Patient')
+
+
+@app.route("/patient/<patient_id>")
+@login_required
+def patient(patient_id):
+    patient = Patient.query.get_or_404(patient_id)
+    return render_template('patient.html', title=patient.patient_id, patient=patient, now=datetime.utcnow())
+
+
+@app.route("/patient/<patient_id>/update", methods=['GET', 'POST'])
+@login_required
+def update_patient(patient_id):
+    patient = Patient.query.get_or_404(patient_id)
+    currentPatient = patient.patient_id
+
+    form = PatientUpdateForm()
+    if form.validate_on_submit():          # notice we are are not passing the dnumber from the form
+        if currentPatient !=form.patient_id.data:
+            patient.patient_id=form.patient_id.data
+        patient.age=form.age.data
+        patient.diagnosis=form.diagnosis.data
+        db.session.commit()
+        flash('Patient has been updated!', 'success')
+        return redirect(url_for('patient', patient_id=patient_id))
+    elif request.method == 'GET':             
+        form.patient_id.data = patient.patient_id   # notice that we ARE passing the dnumber to the form
+        form.age.data = patient.age
+        form.diagnosis.data = patient.diagnosis
+    return render_template('update_patient.html', title='Update Patient',
+                           form=form, legend='Update Patient')          # note the update template!
+
+
+
+
+@app.route("/patient/<patient_id>/delete", methods=['POST'])
+@login_required
+def delete_patient(patient_id):
+    patient = Patient.query.get_or_404(patient_id)
+    db.session.delete(patient)
+    db.session.commit()
+    flash('The Patient has been deleted!', 'success')
+    return redirect(url_for('home'))
+
+
+@app.route("/case/new", methods=['GET', 'POST'])
+@login_required
+def new_case():
+    form = CaseForm()
+    if form.validate_on_submit():
+        medical_case = Medical_Case(case_id=form.case_id.data, outcome=form.outcome.data,stay_duration=form.stay_duration.data,procedure_id_FK=form.procedure_id_FK.data)
+        db.session.add(case_id)
+        db.session.commit()
+        flash('You have added a new Case!', 'success')
+        return redirect(url_for('home'))
+    return render_template('create_case.html', title='New Case',
+                           form=form, legend='New Case')
+
+
+@app.route("/case/<case_id>")
+@login_required
+def medical_case(case_id):
+    medical_case = Medical_Case.query.get_or_404(case_id)
+    return render_template('case.html', title=medical_case.case_id, medical_case=medical_case, now=datetime.utcnow())
+
+
+@app.route("/case/<case_id>/update", methods=['GET', 'POST'])
+@login_required
+def update_case(case_id):
+    medical_case = Medical_Case.query.get_or_404(case_id)
+    currentCase = medical_case.case_id
+
+    form = CaseUpdateForm()
+    if form.validate_on_submit():          # notice we are are not passing the dnumber from the form
+        if currentCase !=form.case_id.data:
+            medical_case.case_id=form.case_id.data
+        medical_case.outcome=form.outcome.data
+        medical_case.stay_duration=form.stay_duration.data
+        medical_case.procedure_id_FK=form.procedure_id_FK.data
+        db.session.commit()
+        flash('Case has been updated!', 'success')
+        return redirect(url_for('case', case_id=case_id))
+    elif request.method == 'GET':             
+        form.case_id.data = medical_case.case_id   # notice that we ARE passing the dnumber to the form
+        form.outcome.data = medical_case.outcome
+        form.stay_duration.data = medical_case.stay_duration
+    return render_template('update_case.html', title='Update Case',
+                           form=form, legend='Update Case')          # note the update template!
+
+
+
+
+@app.route("/case/<case_id>/delete", methods=['POST'])
+@login_required
+def delete_case(case_id):
+    medical_case = Medical_Case.query.get_or_404(case_id)
+    db.session.delete(medical_case)
+    db.session.commit()
+    flash('The Case has been deleted!', 'success')
+    return redirect(url_for('home'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
