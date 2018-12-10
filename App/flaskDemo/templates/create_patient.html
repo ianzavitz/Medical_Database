@@ -1,0 +1,18 @@
+{% extends "update_patient.html" %}
+
+			{% block patient_id %}
+            <div class="form-group">
+                {{ form.patient_id.label(class="form-control-label") }}
+                {% if form.patient_id.errors %}
+                    {{ form.patient_id(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.patient_id.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.patient_id(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+			{% endblock patient_id %}
+			
