@@ -13,3 +13,7 @@ login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 
 from flaskDemo import routes
+from flaskDemo import models
+
+models.db.create_all()
+
