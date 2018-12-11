@@ -39,12 +39,14 @@ foreign key (procedure_id_FK) references medical_procedure(procedure_id),
 foreign key (patient_id_FK) references patient(patient_id)
 );
 
+alter table patient add foreign key (case_id_FK) references medical_case(case_id);
+
 create table works_on (
 physician_id_FK      int            not null,
 case_id_FK           int            not null,
 hours              decimal(3,1)     not null,
 foreign key (physician_id_FK) references physician(physician_id),
-foreign key (case_id_FK) references medical_case(case_id)
+foreign key (case_id_FK) references medical_case(case_id),
+constraint works_on_PK primary key (physician_id_FK, case_id_FK)
 ); 
 
-alter table patient add foreign key (case_id_FK) references medical_case(case_id);
