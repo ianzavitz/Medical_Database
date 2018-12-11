@@ -6,6 +6,7 @@ from sqlalchemy import orm
 
 
 db.Model.metadata.reflect(db.engine)
+db.metadata.clear()
 
 
 @login_manager.user_loader
