@@ -18,7 +18,10 @@ def home():
 @app.route("/about")
 def about():
     return render_template('about.html', title='About')
-
+@app.route("/hospital")
+def hospital():
+	results = Hospital.query.all()
+	return render_template('hospital.html',outString = results)
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
