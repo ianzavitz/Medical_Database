@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">{{ legend }}</legend>
+			{% block case_id %} {% endblock case_id %}
+            <div class="form-group">
+                {{ form.case_id.label(class="form-control-label") }}
+                {% if form.case_id.errors %}
+                    {{ form.case_id(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.case_id.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.case_id(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+			<div class="form-group">
+                {{ form.outcome.label(class="form-control-label") }}
+                {% if form.outcome.errors %}
+                    {{ form.outcome(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.outcome.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.outcome(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+			<div class="form-group">
+                {{ form.stay_duration.label(class="form-control-label") }}
+                {% if form.stay_duration.errors %}
+                    {{ form.stay_duration(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.stay_duration.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.stay_duration(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+			<div class="form-group">
+                {{ form.procedure_id_FK.label(class="form-control-label") }}
+                {% if form.procedure_id_FK.errors %}
+                    {{ form.procedure_id_FK(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.procedure_id_FK.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.procedure_id_FK(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+			<div class="form-group">
+                {{ form.patient_id_FK.label(class="form-control-label") }}
+                {% if form.patient_id_FK.errors %}
+                    {{ form.patient_id_FK(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.patient_id_FK.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.patient_id_FK(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+{% endblock content %}

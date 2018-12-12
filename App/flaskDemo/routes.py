@@ -234,6 +234,7 @@ def update_case(case_id):
         medical_case.outcome=form.outcome.data
         medical_case.stay_duration=form.stay_duration.data
         medical_case.procedure_id_FK=form.procedure_id_FK.data
+        medical_case.patient_id_FK=form.patient_id_FK.data
         db.session.commit()
         flash('Case has been updated!', 'success')
         return redirect(url_for('case', case_id=case_id))
@@ -241,6 +242,8 @@ def update_case(case_id):
         form.case_id.data = medical_case.case_id   # notice that we ARE passing the dnumber to the form
         form.outcome.data = medical_case.outcome
         form.stay_duration.data = medical_case.stay_duration
+        form.procedure_id_FK.data = medical_case.procedure_id_FK
+        form.patient_id_FK.data = medical_case.patient_id_FK
     return render_template('update_case.html', title='Update Case',
                            form=form, legend='Update Case')          # note the update template!
 

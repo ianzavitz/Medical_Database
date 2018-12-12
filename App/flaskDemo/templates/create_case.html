@@ -1,0 +1,18 @@
+{% extends "update_case.html" %}
+
+			{% block case_id %}
+            <div class="form-group">
+                {{ form.case_id.label(class="form-control-label") }}
+                {% if form.case_id.errors %}
+                    {{ form.case_id(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.case_id.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.case_id(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+			{% endblock case_id %}
+			
