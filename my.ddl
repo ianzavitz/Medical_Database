@@ -27,7 +27,8 @@ INSERT INTO hospital (hospital_id,hospital_name) VALUES
 
 
 INSERT INTO medical_procedure VALUES
-   (4234,Excision_of_Abdominal_Aorta_Open_Approach) (4235,'Excision of Abdominal Aorta, Percutaneous Endoscopic Approach'),
+   (4234,'Excision_of_Abdominal_Aorta_Open_Approach'),
+   (4235,'Excision of Abdominal Aorta, Percutaneous Endoscopic Approach'),
    (4236,'Replacement of Abdominal Aorta with Autologous Tissue Substitute, Open Approach'),
    (4237,'Replacement of Abdominal Aorta with Synthetic Substitute, Open Approach'),
    (4238,'Replacement of Abdominal Aorta with Nonautologous Tissue Substitute, Open Approach'),
@@ -75,3 +76,38 @@ INSERT INTO medical_procedure VALUES
    (4280,'Detachment at Left Hand, Partial 4th Ray, Open Approach'),
    (4281,'Detachment at Left Hand, Partial 5th Ray, Open Approach'),
    (4282,'Detachment at Right Thumb, Complete, Open Approach');
+
+   
+INSERT INTO physician(hospital_id_FK,physician_id) VALUES
+(10005,11424,"Elvira"),
+(10005,11426,"Fallon"),
+(10005,11428,"Enola"),
+(10131,11430,"Titus"),
+(11304,11432,"Buffy"),
+(20018,11434,"Nathalie"),
+(20018,11436,"Divina"),
+(20018,11438,"Rosalind"),
+(20018,11440,"See"),
+(20018,11442,"Alica"),
+(20018,11444,"Vida"),
+(21310,11446,"Kenisha"),
+(30071,11448,"Sherly"),
+(30073,11450,"Silvana"),
+(30074,11452,"Siobhan"),
+(30077,11454,"Burt"),
+(30084,11456,"Eusebio"),
+(31305,11458,"Monet"),
+(31308,11460,"Letty"),
+(31309,11462,"Mei"),
+(40007,11464,"Kawasaki"),
+(40018,11466,"Ronaldo"),
+(40050,11468,"Raimundo"),
+(40154,11470,"Mode"),
+(41328,11472,"Spiderman")
+
+INSERT INTO patient(patient_id,age,diagnosis) VALUES
+(1,22,"Ugliness");
+
+INSERT INTO medical_case(medical_case.case_id,medical_case.patient_id_FK,medical_case.procedure_id_FK,medical_case.outcome,medical_case.stay_duration) VALUES
+(1,1,4234,"positive",3);
+UPDATE patient SET case_id_FK = 1 WHERE patient_id = 1
