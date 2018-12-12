@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flaskDemo.models import User
 
@@ -115,8 +115,8 @@ class CaseUpdateForm(FlaskForm):
     #diagnosis = SelectField("Patient Diagnosis", choices=myChoices)  # myChoices defined at top
     stay_duration = StringField("Patient Stay Duration", validators=[DataRequired(),Length(max=50)])  
 
-    procedure_id_FK = StringField("Procedure ID", validators=[DataRequired(),Length(max=50)])  
-    patient_id_FK = StringField("Patient ID", validators=[DataRequired(),Length(max=50)])  
+    procedure_id_FK = IntegerField("Procedure ID", validators=[DataRequired(),Length(max=50)])  
+    patient_id_FK = IntegerField("Patient ID", validators=[DataRequired(),Length(max=50)])  
 
 # the regexp works, and even gives an error message
 #    mgr_start=DateField("Manager's Start Date:  yyyy-mm-dd",validators=[Regexp(regex)])
@@ -136,7 +136,7 @@ class CaseUpdateForm(FlaskForm):
 
 class CaseForm(CaseUpdateForm):
 
-    case_id=IntegerField('case_id', validators=[DataRequired()])
+    case_id = IntegerField('case_id', validators=[DataRequired()])
     submit = SubmitField('Add this department')
 
     def validate_case_id(self, case_id):    #because dnumber is primary key and should be unique
