@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, TextAreaField
+from wtforms import SelectField, StringField, PasswordField, SubmitField, BooleanField, IntegerField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flaskDemo.models import User
 
@@ -67,7 +67,7 @@ class PatientUpdateForm(FlaskForm):
     patient_id=IntegerField('Patient ID', validators=[DataRequired()])
     #dnumber = HiddenField("")
 
-    age=StringField('Patient Age:', validators=[DataRequired(),Length(max=3)])
+    age=StringField('Patient Age', validators=[DataRequired(),Length(max=3)])
 #  Commented out using a text field, validated with a Regexp.  That also works, but a hassle to enter ssn.
 #    mgr_ssn = StringField("Manager's SSN", validators=[DataRequired(),Regexp('^(?!000|666)[0-8][0-9]{2}(?!00)[0-9]{2}(?!0000)[0-9]{4}$', message="Please enter 9 digits for a social security.")])
 
@@ -93,7 +93,7 @@ class PatientUpdateForm(FlaskForm):
 
 class PatientForm(PatientUpdateForm):
 
-    patient_id=IntegerField('patient_id', validators=[DataRequired()])
+    patient_id=IntegerField('Patient ID', validators=[DataRequired()])
     submit = SubmitField('Add this department')
 
     def validate_patient_id(self, patient_id):    #because dnumber is primary key and should be unique
@@ -107,7 +107,7 @@ class CaseUpdateForm(FlaskForm):
     case_id=IntegerField('Case ID', validators=[DataRequired()])
     #dnumber = HiddenField("")
 
-    outcome=StringField('Case Outcome:', validators=[DataRequired(),Length(max=50)])
+    outcome=StringField('Case Outcome', validators=[DataRequired(),Length(max=50)])
 #  Commented out using a text field, validated with a Regexp.  That also works, but a hassle to enter ssn.
 #    mgr_ssn = StringField("Manager's SSN", validators=[DataRequired(),Regexp('^(?!000|666)[0-8][0-9]{2}(?!00)[0-9]{2}(?!0000)[0-9]{4}$', message="Please enter 9 digits for a social security.")])
 
@@ -136,7 +136,7 @@ class CaseUpdateForm(FlaskForm):
 
 class CaseForm(CaseUpdateForm):
 
-    case_id = IntegerField('case_id', validators=[DataRequired()])
+    case_id = IntegerField('Case ID', validators=[DataRequired()])
     submit = SubmitField('Add this department')
 
     def validate_case_id(self, case_id):    #because dnumber is primary key and should be unique
