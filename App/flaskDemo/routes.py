@@ -18,7 +18,10 @@ def home():
 @app.route("/about")
 def about():
     return render_template('about.html', title='About')
-
+@app.route("/hospital")
+def hospital():
+	results = Hospital.query.all()
+	return render_template('hospital.html',outString = results)
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -149,10 +152,8 @@ def delete_post(post_id):
 def new_patient():
     form = PatientForm()
     if form.validate_on_submit():
-        #patient = Patient(patient_id=form.patient_id.data, age=form.age.data,diagnosis=form.diagnosis.data)
-        patient = Patient(age=form.age.data,diagnosis=form.diagnosis.data)
-        #db.session.add(patient_id)
-        db.session.add(patient)
+        patient = Patient(patient_id=form.patient_id.data, age=form.age.data,diagnosis=form.diagnosis.data)
+        db.session.add(patient_id)
         db.session.commit()
         flash('You have added a new Patient!', 'success')
         return redirect(url_for('home'))
@@ -207,8 +208,8 @@ def delete_patient(patient_id):
 def new_case():
     form = CaseForm()
     if form.validate_on_submit():
-        medical_case = Medical_Case(outcome=form.outcome.data,stay_duration=form.stay_duration.data,procedure_id_FK=form.procedure_id_FK.data)
-        db.session.add(medical_case)
+        medical_case = Medical_Case(case_id=form.case_id.data, outcome=form.outcome.data,stay_duration=form.stay_duration.data,procedure_id_FK=form.procedure_id_FK.data)
+        db.session.add(case_id)
         db.session.commit()
         flash('You have added a new Case!', 'success')
         return redirect(url_for('home'))
@@ -236,6 +237,7 @@ def update_case(case_id):
         medical_case.outcome=form.outcome.data
         medical_case.stay_duration=form.stay_duration.data
         medical_case.procedure_id_FK=form.procedure_id_FK.data
+        medical_case.patient_id_FK=form.patient_id_FK.data
         db.session.commit()
         flash('Case has been updated!', 'success')
         return redirect(url_for('case', case_id=case_id))
@@ -243,6 +245,8 @@ def update_case(case_id):
         form.case_id.data = medical_case.case_id   # notice that we ARE passing the dnumber to the form
         form.outcome.data = medical_case.outcome
         form.stay_duration.data = medical_case.stay_duration
+        form.procedure_id_FK.data = medical_case.procedure_id_FK
+        form.patient_id_FK.data = medical_case.patient_id_FK
     return render_template('update_case.html', title='Update Case',
                            form=form, legend='Update Case')          # note the update template!
 
