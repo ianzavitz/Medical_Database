@@ -1,12 +1,9 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from flaskDemo import db
 from flaskDemo.models import User
-from wtforms.fields.html5 import DateField
 
 
 class RegistrationForm(FlaskForm):
@@ -119,6 +116,7 @@ class CaseUpdateForm(FlaskForm):
     stay_duration = StringField("Patient Stay Duration", validators=[DataRequired(),Length(max=50)])  
 
     procedure_id_FK = StringField("Procedure ID", validators=[DataRequired(),Length(max=50)])  
+    patient_id_FK = StringField("Patient ID", validators=[DataRequired(),Length(max=50)])  
 
 # the regexp works, and even gives an error message
 #    mgr_start=DateField("Manager's Start Date:  yyyy-mm-dd",validators=[Regexp(regex)])
