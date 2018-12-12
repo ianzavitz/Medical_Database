@@ -3,7 +3,7 @@ from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import SelectField, StringField, PasswordField, SubmitField, BooleanField, IntegerField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from flaskDemo.models import User
+from flaskDemo.models import User, Patient, Medical_Case 
 
 
 class RegistrationForm(FlaskForm):
@@ -64,7 +64,7 @@ class PostForm(FlaskForm):
 
 class PatientUpdateForm(FlaskForm):
 
-    patient_id=IntegerField('Patient ID', validators=[DataRequired()])
+    #patient_id=IntegerField('Patient ID', validators=[DataRequired()])
     #dnumber = HiddenField("")
 
     age=StringField('Patient Age', validators=[DataRequired(),Length(max=3)])
@@ -80,7 +80,7 @@ class PatientUpdateForm(FlaskForm):
 #    mgr_start = DateField("Manager's Start Date")
 
 #    mgr_start=DateField("Manager's Start Date", format='%Y-%m-%d')
-    submit = SubmitField('Update this department')
+    submit = SubmitField('Update this Patient')
 
 
 # got rid of def validate_dnumber
@@ -94,7 +94,7 @@ class PatientUpdateForm(FlaskForm):
 class PatientForm(PatientUpdateForm):
 
     patient_id=IntegerField('Patient ID', validators=[DataRequired()])
-    submit = SubmitField('Add this department')
+    submit = SubmitField('Add this patient')
 
     def validate_patient_id(self, patient_id):    #because dnumber is primary key and should be unique
         patient = Patient.query.filter_by(patient_id=patient_id.data).first()
@@ -104,7 +104,7 @@ class PatientForm(PatientUpdateForm):
 
 class CaseUpdateForm(FlaskForm):
 
-    case_id=IntegerField('Case ID', validators=[DataRequired()])
+    #case_id=IntegerField('Case ID', validators=[DataRequired()])
     #dnumber = HiddenField("")
 
     outcome=StringField('Case Outcome', validators=[DataRequired(),Length(max=50)])
@@ -123,7 +123,7 @@ class CaseUpdateForm(FlaskForm):
 #    mgr_start = DateField("Manager's Start Date")
 
 #    mgr_start=DateField("Manager's Start Date", format='%Y-%m-%d')
-    submit = SubmitField('Update this department')
+    submit = SubmitField('Update this case')
 
 
 # got rid of def validate_dnumber
@@ -137,7 +137,7 @@ class CaseUpdateForm(FlaskForm):
 class CaseForm(CaseUpdateForm):
 
     case_id = IntegerField('Case ID', validators=[DataRequired()])
-    submit = SubmitField('Add this department')
+    submit = SubmitField('Add this case')
 
     def validate_case_id(self, case_id):    #because dnumber is primary key and should be unique
         medical_case_id = Medical_Case.query.filter_by(case_id=case_id.data).first()
