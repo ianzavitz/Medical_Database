@@ -105,6 +105,7 @@ INSERT INTO physician(hospital_id_FK,physician_id) VALUES
 (40154,11470,"Mode"),
 (41328,11472,"Spiderman")
 
+
 INSERT INTO patient(patient_id,age,diagnosis) VALUES
 (1,22,"Ugliness");
 
