@@ -1,26 +1,31 @@
 {% extends "layout.html" %}
 {% block content %}
-    {% for row in joined_1_n %}
+	{% for row in joined_m_n %}
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">{{ row }}</a> <br/>
-              <small class="text-muted">{{ row.hospital_id }} {{ row.physician_id }}  {{ row.physician_last_name }}</small>
-            </div>
-           
-          </div>
-        </article>
-     {% endfor %}
-	  {% for row in joined_m_n %}
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="#">{{ row }}</a> <br/>
-              <small class="text-muted">{{ row.hospital_id }} {{ row.case_id }}  {{ row.physician_last_name }} {{row.hospital_name}}</small>
+              <a class="mr-2" href=" ">Case  :{{ row.case_id }}</a> <br/>
+              <small>Hospital Name: {{row.hospital_name}}</small>
+			  </br>
+			  <small>Physician's Last Name: {{ row.physician_last_name }}</small
             </div>
            
           </div>
         </article>
      {% endfor %}
 	
+    {% for row in joined_1_n %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href=" ">Case  :{{ row.case_id }}</a> <br/>
+              <small class="text-muted">"Assigned Physician ID: " {{ row.physician_id }}</small>
+			  </br>
+			  <small>Physician Last name: {{ row.physician_last_name }}</small>
+            </div>
+           
+          </div>
+        </article>
+     {% endfor %}
+	  
 {% endblock content %}

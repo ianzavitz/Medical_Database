@@ -1,5 +1,6 @@
 import os
 import secrets
+from flask_sqlalchemy import SQLAlchemy
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskDemo import app, db, bcrypt
@@ -11,8 +12,9 @@ from datetime import datetime
 @app.route("/")
 @app.route("/home")
 def home():
-    posts = Post.query.all()
-    return render_template('home.html', posts=posts)
+	#posts =db.engine.execute('select cou * from Medical_Case where outcome=="REFERED";')
+	posts = Post.query.all()
+	return render_template('home.html', posts=posts)
 @app.route("/cases")
 def cases():
     results2 = Physician.query.join(Works_On,Physician.physician_id == Works_On.physician_id) \
@@ -29,19 +31,12 @@ def about():
     return render_template('about.html', title='About')
 @app.route("/referal")
 def referal():
-	results = Hospital.query.all()
+	results = Medical_Case.query.filter(Medical_Case.outcome=='REFERED')
 	return render_template('referal.html',outString = results)
-
-
-    # results = Department.query.all()
-    # return render_template('dept_home.html', outString = results)
-    # posts = Post.query.all()
-    # return render_template('home.html', posts=posts)
-    
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
-    if current_user.is_authenticated:
+    if current_user.is_authenticated: 
         return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():

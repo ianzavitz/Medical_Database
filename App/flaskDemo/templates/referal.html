@@ -4,10 +4,11 @@
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">{{ row }}</a>   
-              <small class="text-muted">{{ row['hospital_name'] }}</small>   
+              <a class="mr-2" href="#"> Case :{{ row['case_id']}}</a>   
+              <small class="text-muted">Procdure: {{ row['procedure_id_FK'] }}</small>   
+			  <small>Duration of stay: {{ row.stay_duration }}</small>
             </div>
-<h2><a class="article-title" href="{{ url_for('hospital', hospital_id=row.hospital_id) }}">{{ row.hospital_name }}</a></h2>
+<h2><a class="article-title" href="{{ url_for('referal', case_id=row.case_id) }}"></a></h2>
            
           </div>
         </article>
