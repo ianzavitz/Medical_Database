@@ -21,7 +21,7 @@ def home():
 
     
     cursor.execute(query)
-    out = cursor.fetchall()
+    out = cursor.fetchall()[0]
 	
     return render_template('home.html', out = out)
 @app.route("/cases")
