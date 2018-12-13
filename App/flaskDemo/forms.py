@@ -97,13 +97,10 @@ class PatientUpdateForm(FlaskForm):
 
 class PatientForm(PatientUpdateForm):
 
-    #id_=[]
-    #id_.append((1,))
 
     gen_id=db.session.query(Patient.patient_id).count()+1
     
     patient_id=IntegerField('Patient ID', validators=[DataRequired()],default=gen_id)
-    #patient_id=SelectField('Patient ID', choices=id_)
     submit = SubmitField('Add this patient')
 
     def validate_patient_id(self, patient_id):    #because dnumber is primary key and should be unique

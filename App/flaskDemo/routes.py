@@ -14,7 +14,7 @@ from datetime import datetime
 @app.route("/home")
 def home():
     #posts =db.engine.execute('select cou * from Medical_Case where outcome=="REFERED";')
-    posts = Post.query.all()
+    #posts = Post.query.all()
     cnx = mysql.connector.connect(user="student", password="student",database="ProjectDatabase")
     cursor=cnx.cursor()
     query = "SELECT COUNT(*) AS count FROM medical_case"
@@ -22,8 +22,14 @@ def home():
     
     cursor.execute(query)
     out = str(int(cursor.fetchall()[0][0]))
-	
-    return render_template('home.html', out = out)
+
+    query2 = "SELECT medical_case.patient_id_FK FROM medical_case, patient WHERE patient.patient_id = medical_case.patient_id_FK and patient.age <(SELECT patient.age FROM patient WHERE patient.patient_id=1)"
+
+    cursor.execute(query2)
+    out2 = cursor.fetchall()
+    return render_template('home.html', out = out, out2=out2)
+
+
 @app.route("/cases")
 def cases():
     results2 = Physician.query.join(Works_On,Physician.physician_id == Works_On.physician_id) \
@@ -33,6 +39,11 @@ def cases():
                .add_columns(Physician.hospital_id_FK,Works_On.case_id, Physician.physician_id, Physician.physician_last_name) 
 			   
     return render_template('join.html', title='Join',joined_1_n=results, joined_m_n=results2)
+
+@app.route("/patients")
+def patients():
+    out = Patient.query.all()
+    return render_template('patients.html', title='Patients',out=out)
 
 
 @app.route("/about")
@@ -206,7 +217,7 @@ def update_patient(patient_id):
         flash('Patient has been updated!', 'success')
         return redirect(url_for('patient', patient_id=patient_id))
     elif request.method == 'GET':             
-        form.patient_id.data = patient.patient_id   # notice that we ARE passing the dnumber to the form
+        #form.patient_id.data = patient.patient_id   # notice that we ARE passing the dnumber to the form
         form.age.data = patient.age
         form.diagnosis.data = patient.diagnosis
     return render_template('update_patient.html', title='Update Patient',
