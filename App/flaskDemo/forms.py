@@ -2,8 +2,12 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import SelectField, StringField, PasswordField, SubmitField, BooleanField, IntegerField, TextAreaField
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from flaskDemo.models import User, Patient, Medical_Case 
+from flaskDemo import db
+from flaskDemo.models import User, Patient, Medical_Case, Medical_Procedure
+from wtforms.fields.html5 import DateField
+from sqlalchemy.sql.expression import func
 
 
 class RegistrationForm(FlaskForm):
@@ -93,7 +97,13 @@ class PatientUpdateForm(FlaskForm):
 
 class PatientForm(PatientUpdateForm):
 
-    patient_id=IntegerField('Patient ID', validators=[DataRequired()])
+    #id_=[]
+    #id_.append((1,))
+
+    gen_id=db.session.query(Patient.patient_id).count()+1
+    
+    patient_id=IntegerField('Patient ID', validators=[DataRequired()],default=gen_id)
+    #patient_id=SelectField('Patient ID', choices=id_)
     submit = SubmitField('Add this patient')
 
     def validate_patient_id(self, patient_id):    #because dnumber is primary key and should be unique
@@ -104,7 +114,7 @@ class PatientForm(PatientUpdateForm):
 
 class CaseUpdateForm(FlaskForm):
 
-    #case_id=IntegerField('Case ID', validators=[DataRequired()])
+
     #dnumber = HiddenField("")
 
     outcome=StringField('Case Outcome', validators=[DataRequired(),Length(max=50)])
@@ -115,8 +125,22 @@ class CaseUpdateForm(FlaskForm):
     #diagnosis = SelectField("Patient Diagnosis", choices=myChoices)  # myChoices defined at top
     stay_duration = StringField("Patient Stay Duration", validators=[DataRequired(),Length(max=50)])  
 
-    procedure_id_FK = IntegerField("Procedure ID", validators=[DataRequired(),Length(max=50)])  
-    patient_id_FK = IntegerField("Patient ID", validators=[DataRequired(),Length(max=50)])  
+    pr_ids=db.session.query(Medical_Procedure.procedure_id).distinct()
+    results=list()
+    for row in pr_ids:
+        rowDict=row._asdict()
+        results.append(rowDict)
+    myChoices = [(row['procedure_id'],row['procedure_id']) for row in results]
+    procedure_id_FK = SelectField("Procedure ID", choices=myChoices,coerce=int)
+
+    #patient_id_FK = IntegerField("Patient ID", validators=[DataRequired(),Length(max=50)])  
+    p_ids=db.session.query(Patient.patient_id).distinct()
+    results=list()
+    for row in p_ids:
+        rowDict=row._asdict()
+        results.append(rowDict)
+    myChoices = [(row['patient_id'],row['patient_id']) for row in results]
+    patient_id_FK = SelectField("Patient ID", choices=myChoices,coerce=int)  
 
 # the regexp works, and even gives an error message
 #    mgr_start=DateField("Manager's Start Date:  yyyy-mm-dd",validators=[Regexp(regex)])
@@ -136,11 +160,12 @@ class CaseUpdateForm(FlaskForm):
 
 class CaseForm(CaseUpdateForm):
 
-    case_id = IntegerField('Case ID', validators=[DataRequired()])
+    gen_id=db.session.query(Medical_Case.case_id).count()+1
+    case_id=StringField('Case ID', validators=[DataRequired()],default=gen_id)
     submit = SubmitField('Add this case')
 
     def validate_case_id(self, case_id):    #because dnumber is primary key and should be unique
-        medical_case_id = Medical_Case.query.filter_by(case_id=case_id.data).first()
+        medical_case  = Medical_Case.query.filter_by(case_id=case_id.data).first()
         if medical_case:
             raise ValidationError('That case id is taken. Please choose a different one.')
 

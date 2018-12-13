@@ -153,7 +153,9 @@ def new_patient():
     form = PatientForm()
     if form.validate_on_submit():
         patient = Patient(patient_id=form.patient_id.data, age=form.age.data,diagnosis=form.diagnosis.data)
-        db.session.add(patient_id)
+        #patient = Patient(age=form.age.data,diagnosis=form.diagnosis.data)
+        #db.session.add(patient_id)
+        db.session.add(patient)
         db.session.commit()
         flash('You have added a new Patient!', 'success')
         return redirect(url_for('home'))
@@ -208,8 +210,9 @@ def delete_patient(patient_id):
 def new_case():
     form = CaseForm()
     if form.validate_on_submit():
-        medical_case = Medical_Case(case_id=form.case_id.data, outcome=form.outcome.data,stay_duration=form.stay_duration.data,procedure_id_FK=form.procedure_id_FK.data)
-        db.session.add(case_id)
+        medical_case = Medical_Case(case_id=form.case_id.data, outcome=form.outcome.data,stay_duration=form.stay_duration.data,patient_id_FK=form.patient_id_FK.data,procedure_id_FK=form.procedure_id_FK.data)
+        #db.session.add(case_id)
+        db.session.add(medical_case)
         db.session.commit()
         flash('You have added a new Case!', 'success')
         return redirect(url_for('home'))
