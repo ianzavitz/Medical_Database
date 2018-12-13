@@ -1,6 +1,7 @@
 import os
 import secrets
 from flask_sqlalchemy import SQLAlchemy
+import mysql.connector
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskDemo import app, db, bcrypt
@@ -12,9 +13,17 @@ from datetime import datetime
 @app.route("/")
 @app.route("/home")
 def home():
-	#posts =db.engine.execute('select cou * from Medical_Case where outcome=="REFERED";')
-	posts = Post.query.all()
-	return render_template('home.html', posts=posts)
+    #posts =db.engine.execute('select cou * from Medical_Case where outcome=="REFERED";')
+    posts = Post.query.all()
+    cnx = mysql.connector.connect(user="student", password="student",database="ProjectDatabase")
+    cursor=cnx.cursor()
+    query = "SELECT COUNT(*) AS count FROM medical_case"
+
+    
+    cursor.execute(query)
+    out = cursor.fetchall()
+	
+    return render_template('home.html', out = out)
 @app.route("/cases")
 def cases():
     results2 = Physician.query.join(Works_On,Physician.physician_id == Works_On.physician_id) \
