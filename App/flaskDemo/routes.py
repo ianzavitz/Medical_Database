@@ -27,10 +27,10 @@ def cases():
 @app.route("/about")
 def about():
     return render_template('about.html', title='About')
-@app.route("/hospital")
-def hospital():
+@app.route("/referal")
+def referal():
 	results = Hospital.query.all()
-	return render_template('hospital.html',outString = results)
+	return render_template('referal.html',outString = results)
 
 
     # results = Department.query.all()
