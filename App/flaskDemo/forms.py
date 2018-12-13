@@ -141,7 +141,18 @@ class CaseUpdateForm(FlaskForm):
         results.append(rowDict)
     myChoices = [(row['patient_id'],row['patient_id']) for row in results]
     patient_id_FK = SelectField("Patient ID", choices=myChoices,coerce=int)  
-
+	
+    '''
+    ph_nms=db.session.query(Physician.physician_last_name).distinct()
+    results=list()
+    for row in ph_nms:
+        rowDict=row._asdict()
+        results.append(rowDict)
+    myChoices = [(row['physician_last_name'],row['physician_last_name']) for row in results]
+    physician_name = SelectField("Physician", choices=myChoices)
+    physician_id=db.session.query(Physician.physician_id).distinct().filter_by(physician_last_name=physician_name)
+    '''
+    
     ph_ids=db.session.query(Physician.physician_id).distinct()
     results=list()
     for row in ph_ids:
@@ -149,7 +160,7 @@ class CaseUpdateForm(FlaskForm):
         results.append(rowDict)
     myChoices = [(row['physician_id'],row['physician_id']) for row in results]
     physician_id = SelectField("Physician ID", choices=myChoices,coerce=int)
-
+    
     hours = IntegerField("Procedure Duration (hrs)", validators=[DataRequired()])
 
 # the regexp works, and even gives an error message
