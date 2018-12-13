@@ -5,7 +5,7 @@ from wtforms import SelectField, StringField, PasswordField, SubmitField, Boolea
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flaskDemo import db
-from flaskDemo.models import User, Patient, Medical_Case, Medical_Procedure
+from flaskDemo.models import User, Patient, Medical_Case, Medical_Procedure, Physician, Works_On
 from wtforms.fields.html5 import DateField
 from sqlalchemy.sql.expression import func
 
@@ -141,6 +141,16 @@ class CaseUpdateForm(FlaskForm):
         results.append(rowDict)
     myChoices = [(row['patient_id'],row['patient_id']) for row in results]
     patient_id_FK = SelectField("Patient ID", choices=myChoices,coerce=int)  
+
+    ph_ids=db.session.query(Physician.physician_id).distinct()
+    results=list()
+    for row in ph_ids:
+        rowDict=row._asdict()
+        results.append(rowDict)
+    myChoices = [(row['physician_id'],row['physician_id']) for row in results]
+    physician_id = SelectField("Physician ID", choices=myChoices,coerce=int)
+
+    hours = IntegerField("Procedure Duration (hrs)", validators=[DataRequired()])
 
 # the regexp works, and even gives an error message
 #    mgr_start=DateField("Manager's Start Date:  yyyy-mm-dd",validators=[Regexp(regex)])
