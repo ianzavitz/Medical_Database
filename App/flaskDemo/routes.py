@@ -13,6 +13,15 @@ from datetime import datetime
 def home():
     posts = Post.query.all()
     return render_template('home.html', posts=posts)
+@app.route("/cases")
+def cases():
+    results2 = Physician.query.join(Works_On,Physician.physician_id == Works_On.physician_id) \
+               .add_columns(Works_On.case_id,Physician.hospital_id_FK,Physician.physician_id, Physician.physician_last_name) \
+               .join(Hospital, Hospital.hospital_id == Physician.hospital_id_FK).add_columns(Hospital.hospital_name)
+    results =  Physician.query.join(Works_On,Physician.physician_id == Works_On.physician_id) \
+               .add_columns(Physician.hospital_id_FK,Works_On.case_id, Physician.physician_id, Physician.physician_last_name) 
+			   
+    return render_template('join.html', title='Join',joined_1_n=results, joined_m_n=results2)
 
 
 @app.route("/about")
@@ -22,6 +31,13 @@ def about():
 def hospital():
 	results = Hospital.query.all()
 	return render_template('hospital.html',outString = results)
+
+
+    # results = Department.query.all()
+    # return render_template('dept_home.html', outString = results)
+    # posts = Post.query.all()
+    # return render_template('home.html', posts=posts)
+    
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():

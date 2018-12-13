@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for row in joined_1_n %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ row }}</a> <br/>
+              <small class="text-muted">{{ row.hospital_id }} {{ row.physician_id }}  {{ row.physician_last_name }}</small>
+            </div>
+           
+          </div>
+        </article>
+     {% endfor %}
+	  {% for row in joined_m_n %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ row }}</a> <br/>
+              <small class="text-muted">{{ row.hospital_id }} {{ row.case_id }}  {{ row.physician_last_name }} {{row.hospital_name}}</small>
+            </div>
+           
+          </div>
+        </article>
+     {% endfor %}
+	
+{% endblock content %}

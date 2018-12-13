@@ -78,7 +78,7 @@ INSERT INTO medical_procedure VALUES
    (4282,'Detachment at Right Thumb, Complete, Open Approach');
 
    
-INSERT INTO physician(hospital_id_FK,physician_id) VALUES
+INSERT INTO physician(hospital_id_FK,physician_id,physician_last_name) VALUES
 (10005,11424,"Elvira"),
 (10005,11426,"Fallon"),
 (10005,11428,"Enola"),
