@@ -253,17 +253,16 @@ def medical_case(case_id):
 @login_required
 def update_case(case_id):
     medical_case = Medical_Case.query.get_or_404(case_id)
-    case_id_FK = case_id
-    works_on=Works_On.query.get_or_404(case_id_FK)
+    #works_on=Works_On.query.get_or_404(case_id)
     currentCase = medical_case.case_id
-    currentW_O = works_on.case_id_FK
+    #currentW_O = works_on.case_id
 
     form = CaseUpdateForm()
     if form.validate_on_submit():          # notice we are are not passing the dnumber from the form
         if currentCase !=form.case_id.data:
             medical_case.case_id=form.case_id.data
-        if currentW_O !=form.case_id.data:
-            works_on.case_id_FK=form.case_id.data
+        #if currentW_O !=form.case_id.data:
+         #   works_on.case_id_FK=form.case_id.data
         medical_case.outcome=form.outcome.data
         medical_case.stay_duration=form.stay_duration.data
         medical_case.procedure_id_FK=form.procedure_id_FK.data
@@ -274,13 +273,13 @@ def update_case(case_id):
         flash('Case has been updated!', 'success')
         return redirect(url_for('case', case_id=case_id))
     elif request.method == 'GET':             
-        form.case_id.data = medical_case.case_id   # notice that we ARE passing the dnumber to the form
+        #form.case_id.data = medical_case.case_id   # notice that we ARE passing the dnumber to the form
         form.outcome.data = medical_case.outcome
         form.stay_duration.data = medical_case.stay_duration
         form.procedure_id_FK.data = medical_case.procedure_id_FK
         form.patient_id_FK.data = medical_case.patient_id_FK
-        form.physician_id.data = works_on.physician_id
-        form.hour.data = works_on.hours
+        #form.physician_id.data = works_on.physician_id
+        #form.hour.data = works_on.hours
     return render_template('update_case.html', title='Update Case',
                            form=form, legend='Update Case')          # note the update template!
 
