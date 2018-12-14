@@ -107,8 +107,11 @@ INSERT INTO physician(hospital_id_FK,physician_id,physician_last_name) VALUES
 
 
 INSERT INTO patient(patient_id,age,diagnosis) VALUES
-(1,22,"Ugliness");
+(1,22,"Bronchitis");
 
-INSERT INTO medical_case(medical_case.case_id,medical_case.patient_id_FK,medical_case.procedure_id_FK,medical_case.outcome,medical_case.stay_duration) VALUES
-(1,1,4234,"positive",3);
-UPDATE patient SET case_id_FK = 1 WHERE patient_id = 1
+INSERT INTO medical_case(procedure_id_FK, patient_id_FK, case_id, outcome, stay_duration) VALUES
+(4234,1,1,"Positive",2),
+(4248,1,2,"Positive",3);
+INSERT INTO works_on(physician_id, case_id, hours) VALUES
+(11430,1,2),
+(11448,2,9);
