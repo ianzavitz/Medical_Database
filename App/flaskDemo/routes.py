@@ -182,7 +182,7 @@ def delete_patient(patient_id):
     db.session.delete(patient)
     db.session.commit()
     flash('The Patient has been deleted!', 'success')
-    return redirect(url_for('home'))
+    return redirect(url_for('patients'))
 
 
 @app.route("/case/new", methods=['GET', 'POST'])
@@ -253,7 +253,7 @@ def delete_case(case_id):
     db.session.delete(medical_case)
     db.session.commit()
     flash('The Case has been deleted!', 'success')
-    return redirect(url_for('home'))
+    return redirect(url_for('cases'))
 
 
 
