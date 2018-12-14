@@ -50,3 +50,12 @@ foreign key (case_id_FK) references medical_case(case_id),
 constraint works_on_PK primary key (physician_id_FK, case_id_FK)
 ); 
 
+create table user( 
+id					int				not null	AUTO_INCREMENT,
+username			varchar(20)		not null,
+email				varchar(120)	not null,
+imagefile			varchar(20), 
+password			varchar(60)		not null,
+primary key(id)
+);
+
